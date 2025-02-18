@@ -1,0 +1,20 @@
+<div class="container">
+  <h1 class="mt-4">Profil de <%= @user.first_name %> <%= @user.last_name %></h1>
+  <p><strong>Email :</strong> <%= @user.email %></p>
+  <p><strong>Description :</strong> <%= @user.description.present? ? @user.description : "Aucune description fournie." %></p>
+
+  <h2 class="mt-4">Mes événements</h2>
+  <% if @events.any? %>
+    <ul class="list-group">
+      <% @events.each do |event| %>
+        <li class="list-group-item">
+          <a href="<%= event_path(event) %>"><%= event.title %></a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Aucun événement créé.</p>
+  <% end %>
+
+  <a href="<%= edit_user_registration_path %>" class="btn btn-primary mt-4">Modifier mon email / mot de passe</a>
+</div>
