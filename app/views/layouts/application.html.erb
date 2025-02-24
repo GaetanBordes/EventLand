@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
@@ -8,57 +8,66 @@
 
     <title><%= content_for(:title) || "Event Land" %></title>
 
-    <!-- Assurez-vous que le lien CSS de Bootstrap est présent -->
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag "bootstrap.min", "application", "data-turbo-track": "reload" %>
 
-    <%= javascript_importmap_tags %> <!-- Ou javascript_pack_tag si tu utilises Yarn -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
 
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <!-- Nom de l'application -->
-    <a class="navbar-brand" href="#">Mon Application</a>
+        <div class="container-fluid">
+            <!-- Nom de l'application -->
+            <a class="navbar-brand" href="#">Mon Application</a>
 
-    <!-- Menu principal -->
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
-        <!-- Lien vers l'accueil -->
-        <li class="nav-item">
-          <%= link_to "Accueil", root_path, class: "nav-link active" %>
-        </li>
-        <!-- Lien pour créer un événement -->
-        <li class="nav-item">
-          <%= link_to "Créer un événement", new_event_path, class: "nav-link" %>
-        </li>
-      </ul>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <%= link_to "Accueil", root_path, class: "nav-link active" %>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to "Créer un événement", new_event_path, class: "nav-link" %>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav ms-auto">
+                    <% if user_signed_in? %>
+                        <li class="nav-item dropdown">
+                            <%= link_to "Mon Profil", user_path(current_user), class: "nav-link" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= form_with url: destroy_user_session_path, method: :delete, class: "nav-link" do %>
+                                <%= submit_tag "Se déconnecter", class: "dropdown-item" %>
+                            <% end %>
+                        </li>
+                    <% else %>
+                        <li class="nav-item">
+                            <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to "Se connecter", new_user_session_path, class: "nav-link" %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-      <!-- Authentification utilisateurs -->
-      <ul class="navbar-nav ms-auto">
-        <% if user_signed_in? %>
-          <!-- Dropdown Mon Profil sans JavaScript -->
-          <li class="nav-item dropdown">
-            <%= link_to "Mon Profil", user_path(current_user), class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= form_with url: destroy_user_session_path, method: :delete, class: "nav-link" do %>
-            <%= submit_tag "Se déconnecter", class: "dropdown-item" %>
-          <% end %>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Se connecter", new_user_session_path, class: "nav-link" %>
-          </li>
-        <% end %>
-      </ul>
+    <div class="container mt-5">
+        <%= yield %>
     </div>
-  </div>
-</nav>
 
-  </head>
-
-  <body>
-  <%= yield %>
+    <!-- Scripts -->
+    <script src="https://js.stripe.com/v3/"></script>
 </body>
+
+<footer class="footer bg-light text-center py-3">
+  <div class="container">
+    <p class="text-muted mb-1">© 2025 Mon Application. Tous droits réservés.</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#" class="link-secondary">À propos</a></li>
+      <li class="list-inline-item"><a href="#" class="link-secondary">Contact</a></li>
+      <li class="list-inline-item"><a href="#" class="link-secondary">Politique de confidentialité</a></li>
+    </ul>
+  </div>
+</footer>
 </html>

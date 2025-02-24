@@ -1,0 +1,14 @@
+<div class="card comment-card mb-3">
+  <div class="row g-0">
+    <div class="col-md-2 text-center">
+      <img src="<%= asset_path(comment.user.avatar_url || 'default-avatar.jpg') %>" class="rounded-circle img-fluid" alt="Avatar">
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h6 class="card-title mb-1"><%= comment.user.first_name %> <%= comment.user.last_name %></h6>
+        <p class="text-muted small"><%= comment.created_at.strftime('%d %B %Y à %H:%M') %></p>
+        <p class="card-text"><%= comment.content %></p>
+      </div>
+    </div>
+  </div>
+</div>

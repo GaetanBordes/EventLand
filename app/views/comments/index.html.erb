@@ -1,0 +1,11 @@
+<div class="container mt-5">
+  <h2>Commentaires</h2>
+
+  <!-- Formulaire de Commentaire -->
+  <%= render "comments/comment_form" %>
+
+  <!-- Liste des Commentaires -->
+  <% @event.comments.order(created_at: :desc).each do |comment| %>
+    <%= render "comments/comment", comment: comment %>
+  <% end %>
+</div>

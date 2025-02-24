@@ -3,6 +3,7 @@ class Event < ApplicationRecord
   belongs_to :admin, class_name: 'User'
   has_many :attendances, dependent: :destroy
   has_many :attendees, through: :attendances, source: :user
+  has_many :comments, dependent: :destroy
 
   # Validations
   validates :start_date, presence: { message: "La date de début doit être renseignée" }
@@ -22,6 +23,10 @@ class Event < ApplicationRecord
   end
 
   private
+
+  def show
+    @event = Event.find(params[:id])
+  end
 
   # Validation : La date de début ne peut pas être dans le passé
   def start_date_cannot_be_in_the_past
