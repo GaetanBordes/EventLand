@@ -1,76 +1,51 @@
 <div class="event-banner text-center">
   <div class="overlay"></div>
   <div class="container">
-    <h1 class="display-3 fw-bold"><%= @event.title %></h1>
-    <p class="lead"><i class="fas fa-map-marker-alt"></i> <%= @event.location %></p>
+    <h1 class="display-3 fw-bold text-white"><%= @event.title %></h1>
+    <p class="lead text-white"><i class="fas fa-map-marker-alt"></i> <%= @event.location %></p>
   </div>
 </div>
-
 
 <div class="container mt-5">
   <div class="row">
-    
-  <div class="col-md-4">
-
-  <% if @event.start_date.present? %>
-    <p class="text-muted">
-      Début : <%= @event.start_date.strftime('%d %B %Y, %H:%M') %>
-    </p>
-  <% else %>
-    <p class="text-muted">Date de début non disponible</p>
-  <% end %>
-
-  <% if @event.end_date.present? %>
-    <p class="text-muted">
-      Fin : <%= @event.end_date.strftime('%d %B %Y, %H:%M') %>
-    </p>
-  <% else %>
-    <p class="text-muted">Date de fin non disponible</p>
-  <% end %>
-
-  <p>
-    <i class="fas fa-clock"></i> Durée : <%= @event.duration %> minutes
-  </p>
-
-  <p>
-    <i class="fas fa-euro-sign"></i> Prix : <%= @event.price %> €
-  </p>
-
-  <p><strong>Description :</strong></p>
-  <p><%= @event.description %></p>
-
-  <button class="btn btn-primary w-100">Participer</button>
-</div>
-
-
-  </div>
-
-  <div class="row mt-4">
-    <div class="col-md-12 d-flex justify-content-between align-items-center">
-      <div>
-        <i class="fas fa-clock me-2"></i> <%= @event.duration %> heures
-        <i class="fas fa-users ms-3"></i> <%= @event.attendees.count %> participants
-      </div>
-      <button class="btn btn-secondary">Partager</button>
-    </div>
-  </div>
-
-  <div class="row mt-4">
     <div class="col-md-8">
-      <h2>Description</h2>
-      <p><%= @event.description %></p>
+      <div class="card p-4 mb-4 shadow">
+        <h2 class="mb-3">Informations</h2>
+        <p><i class="fas fa-calendar-alt"></i> <strong>Début :</strong> <%= l(@event.start_date, format: :long) %></p>
+        <p><i class="fas fa-calendar-alt"></i> <strong>Fin :</strong> <%= l(@event.end_date, format: :long) %></p>
+        <p><i class="fas fa-clock"></i> <strong>Durée :</strong> <%= @event.duration %> minutes</p>
+        <p><i class="fas fa-euro-sign"></i> <strong>Prix :</strong> <%= number_to_currency(@event.price, unit: "€") %></p>
+        <p><strong>Description :</strong></p>
+        <p><%= @event.description %></p>
+        <button class="btn btn-primary w-100 mt-3">Participer</button>
+      </div>
     </div>
+
     <div class="col-md-4">
-      <h2>Informations</h2>
-      <p><i class="fas fa-ticket-alt"></i> Prix : <%= number_to_currency(@event.price, unit: "€") %></p>
+      <div class="card p-4 mb-4 shadow bg-light">
+        <h2>Participants</h2>
+        <p><i class="fas fa-users"></i> <%= @event.attendees.count %> participants</p>
+        <button class="btn btn-secondary w-100">Partager</button>
+      </div>
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-md-12 text-center">
-      <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
-      <a href="#" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
-      <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
-    </div>
+  <div class="card p-4 mb-4 shadow">
+    <h2>Description détaillée</h2>
+    <p><%= @event.description %></p>
+  </div>
+
+  <div class="card p-4 mb-4 shadow">
+    <h2>Commentaires</h2>
+    <%= render "comments/comment_form" %>
+    <% @event.comments.order(created_at: :desc).each do |comment| %>
+      <%= render "comments/comment", comment: comment %>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
+    <a href="#" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
+    <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
   </div>
 </div>

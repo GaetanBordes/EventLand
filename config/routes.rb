@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: 'registrations' }  # Devise pour gérer les sessions utilisateurs
+  devise_for :users, controllers: { registrations: 'registrations' }  
   
-  resources :users, only: [:show]  # Route pour afficher le profil utilisateur
+  resources :users, only: [:show]  
 
-  root to: 'events#index'  # Racine de l'application
+  root to: 'events#index'  
 
-  # Autres ressources, par exemple, pour les événements
-  resources :events
+
+  resources :events do
+  resources :comments, only: [:create, :destroy]
+  end
 
   scope '/checkout' do
     post 'create', to: 'checkout#create', as: 'checkout_create'

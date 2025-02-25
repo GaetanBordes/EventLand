@@ -1,16 +1,16 @@
 <div class="banner-large text-center">
   <div class="container">
-  <img src="<%= asset_path('banner-large.jpg') %>" alt="Bannière" class="img-fluid banner-image">
+    <img src="<%= asset_path('banner-large.jpg') %>" alt="Bannière" class="img-fluid banner-image">
     <p class="lead text-white">Créez et découvrez des événements uniques près de chez vous.</p>
     <a href="<%= new_event_path %>" class="btn btn-primary btn-lg">Créer un événement</a>
   </div>
-
+</div>
 
 <div class="container">
   <div class="row">
     <% @events.each do |event| %>
       <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
+        <div class="card event-card mb-4 shadow-sm">
           <div class="card-body">
             <h5 class="card-title"><%= event.title %></h5>
             <p class="card-text"><%= truncate(event.description, length: 100) %></p>

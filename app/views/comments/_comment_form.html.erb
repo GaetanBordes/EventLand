@@ -1,6 +1,7 @@
 <div class="card p-3 mb-4">
   <h5 class="mb-3">Laisser un commentaire</h5>
-  <%= form_with(model: [@event, Comment.new], local: true) do |f| %>
+  <%= form_with(model: [@event, Comment.new], url: event_comments_path(@event), local: true) do |f| %>
+
     <div class="mb-3">
       <%= f.text_area :content, class: "form-control", rows: 3, placeholder: "Écrivez votre commentaire ici..." %>
     </div>
